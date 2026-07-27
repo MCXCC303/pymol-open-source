@@ -204,7 +204,7 @@ def validate_bundle():
     for root, _dirs, files in os.walk(str(bundle)):
         for f in files:
             if any(name in f for name in ['PySide6', 'Qt6', 'Qt5', 'shiboken6', 'shiboken2']) \
-               and any(f.endswith(ext) for ext in ('.so', '.so.6', '.pyd', '.dylib')):
+               and any(f.endswith(ext) for ext in ('.so', '.so.6', '.pyd', '.dylib', '.dll')):
                 qt_found = True
                 break
 
