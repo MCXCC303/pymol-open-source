@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+ "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- Allow loading of unsigned dynamically linked libraries
+         (critical for .so files in the PyMOL bundle) -->
+    <key>com.apple.security.cs.disable-library-validation</key>
+    <true/>
+
+    <!-- Allow the app to use OpenGL / Metal for 3D rendering -->
+    <key>com.apple.security.cs.allow-opengl</key>
+    <true/>
+
+    <!-- Allow network access (RPC server, PDB downloads, updates) -->
+    <key>com.apple.security.network.client</key>
+    <true/>
+    <key>com.apple.security.network.server</key>
+    <true/>
+
+    <!-- Allow reading files (loading PDB, session files, etc.) -->
+    <key>com.apple.security.files.user-selected.read-write</key>
+    <true/>
+    <key>com.apple.security.files.downloads.read-write</key>
+    <true/>
+    <key>com.apple.security.files.documents.read-write</key>
+    <true/>
+
+    <!-- Allow execution of bundled Python interpreter -->
+    <key>com.apple.security.cs.allow-unsigned-executable-memory</key>
+    <true/>
+</dict>
+</plist>
