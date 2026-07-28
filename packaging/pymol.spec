@@ -249,6 +249,10 @@ else:
     # Windows / Linux onedir
     pyz = PYZ(a.pure)
 
+    # Use console=True on Windows for debugging (shows stdout/stderr)
+    # Change to console=False for release builds
+    _win_console = os.environ.get('PYMOL_CONSOLE', '1' if sys.platform == 'win32' else '0') == '1'
+
     exe = EXE(
         pyz,
         a.scripts,
@@ -259,7 +263,7 @@ else:
         bootloader_ignore_signals=False,
         strip=False,
         upx=True,
-        console=False,
+        console=_win_console,
         icon=None,
     )
 
