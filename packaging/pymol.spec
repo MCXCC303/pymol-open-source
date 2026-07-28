@@ -81,10 +81,11 @@ for _extra_dir in ['examples', 'test']:
     if _extra_src.exists():
         added_files.append((_extra_src, os.path.join('pymol', 'pymol_path', _extra_dir)))
 
-# Add LICENSE
-_license_src = _PROJ_ROOT / 'LICENSE'
-if _license_src.exists():
-    added_files.append((_license_src, 'pymol/pymol_path'))
+# Add LICENSE and NOTICE
+for _notice_file in ['LICENSE', 'packaging/NOTICE.txt']:
+    _notice_src = _PROJ_ROOT / _notice_file
+    if _notice_src.exists():
+        added_files.append((_notice_src, '.'))
 
 # -- Hidden imports ----------------------------------------------------------
 

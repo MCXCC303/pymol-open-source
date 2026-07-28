@@ -85,6 +85,7 @@ def main():
         _write_log("pymol imported OK")
 
         _write_log("Calling pymol.launch()...")
+        print("\n  [课程版] 药用人工智能教学环境 — 详见 NOTICE.txt\n")
         pymol.launch()
 
     except SystemExit:

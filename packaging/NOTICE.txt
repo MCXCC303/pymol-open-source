@@ -1,0 +1,39 @@
+================================================================================
+                        PyMOL Open Source — 使用声明
+================================================================================
+
+本软件为 PyMOL Molecular Graphics System（开源版），由 Schrodinger, LLC 开发并
+以 BSD 类许可证发布。
+
+                          === 课程用途声明 ===
+
+本发行版专为 **药物人工智能（Pharmaceutical AI）课程** 教学用途而打包分发。
+
+使用场景：
+  - 蛋白质/小分子三维结构可视化
+  - 药物-靶点相互作用分析
+  - 分子动力学轨迹查看
+  - 虚拟筛选结果展示
+  - 基于结构的药物设计教学
+
+                          === 版权声明 ===
+
+PyMOL(TM) Molecular Graphics System, Version 3.2.0a
+Copyright (c) Schrodinger, LLC. All Rights Reserved.
+
+PyMOL is user-supported open-source software. Although some versions are freely
+available, PyMOL is not in the public domain.
+
+如果 PyMOL 对您的工作或研究有帮助，请考虑购买 PyMOL Maintenance and/or Support
+subscription 以支持我们持续创建开放且可负担的科学软件。
+
+更多信息：http://www.pymol.org
+
+                          === 免责声明 ===
+
+本打包版本仅供教育和研究用途。使用者应遵守 PyMOL 原始许可证条款。
+对于临床诊断、药物开发等商业/监管用途，请联系 Schrodinger, Inc. 获取适当授权。
+
+本打包中包含的第三方组件（Python、Qt/PySide6、NumPy、Mesa 等）均按其各自的
+开源许可证发布。
+================================================================================
