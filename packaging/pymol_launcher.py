@@ -44,17 +44,29 @@ def _setup_pymol_path():
 
 
 def _setup_qt_plugins():
-    """Ensure Qt finds its platform plugin (qwindows.dll on Windows)."""
+    """Ensure Qt finds its platform plugin and OpenGL fallback on Windows."""
     if getattr(sys, 'frozen', False):
-        qt_plugin_path = os.path.join(sys._MEIPASS, 'PySide6', 'Qt', 'plugins')
+        # Qt plugins are at PySide6/plugins/ (conda layout), not PySide6/Qt/plugins/
+        qt_plugin_path = os.path.join(sys._MEIPASS, 'PySide6', 'plugins')
         if os.path.isdir(qt_plugin_path):
             os.environ['QT_PLUGIN_PATH'] = qt_plugin_path
+            os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = os.path.join(qt_plugin_path, 'platforms')
             _write_log(f"QT_PLUGIN_PATH set to: {qt_plugin_path}")
         else:
             _write_log(f"WARNING: Qt plugin path not found: {qt_plugin_path}")
+            # Try alternate location
+            alt = os.path.join(sys._MEIPASS, 'PySide6', 'Qt', 'plugins')
+            if os.path.isdir(alt):
+                os.environ['QT_PLUGIN_PATH'] = alt
+                os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = os.path.join(alt, 'platforms')
+                _write_log(f"QT_PLUGIN_PATH set to (alt): {alt}")
 
-        # Also set the PySide6-specific variable
-        os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = qt_plugin_path
+    # On Windows, default to software OpenGL for broadest compatibility
+    # (VM, remote desktop, and systems without OpenGL 3.3+ drivers).
+    # Users with proper GPUs can set QT_OPENGL=desktop to override.
+    if sys.platform == 'win32' and 'QT_OPENGL' not in os.environ:
+        os.environ['QT_OPENGL'] = 'software'
+        _write_log("QT_OPENGL defaulted to 'software' (use env var to override)")
 
 
 def main():
