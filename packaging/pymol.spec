@@ -172,10 +172,10 @@ binaries += _collect_libs_from_packages(['pymol', 'chempy.champ'])
 if sys.platform == 'win32':
     # Mesa software OpenGL renderer and ANGLE (Direct3D translation layer)
     # Needed when the system lacks a desktop OpenGL driver (VM, remote desktop)
-    _ogl_dlls = ['opengl32sw.dll', 'libEGL.dll', 'libGLESv2.dll', 'd3dcompiler_47.dll']
-    for _dll_name in _ogl_dlls:
-        for _prefix in prefix_path:
-            _candidate = os.path.join(_prefix, 'Library', 'bin', _dll_name)
+    _conda_prefix = os.environ.get('CONDA_PREFIX', sys.prefix)
+    for _dll_name in ['opengl32sw.dll', 'libEGL.dll', 'libGLESv2.dll']:
+        for _subdir in ['Library/bin', 'Library/lib', 'bin', 'lib']:
+            _candidate = os.path.join(_conda_prefix, _subdir, _dll_name)
             if os.path.exists(_candidate):
                 binaries.append((_candidate, '.'))
                 print(f"Added OpenGL fallback: {_candidate}")
