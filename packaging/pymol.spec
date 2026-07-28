@@ -199,30 +199,7 @@ a = Analysis(
 _exe_name = 'PyMOL'
 
 if sys.platform == 'darwin':
-    # macOS .app bundle
-    app = BUNDLE(
-        a,
-        name=f'{_exe_name}.app',
-        icon=None,
-        bundle_identifier='org.pymol.pymol',
-        info_plist={
-            'NSPrincipalClass': 'NSApplication',
-            'NSHighResolutionCapable': 'True',
-            'CFBundleName': 'PyMOL',
-            'CFBundleDisplayName': 'PyMOL Molecular Graphics System',
-            'CFBundleGetInfoString': 'PyMOL - Molecular Visualization',
-            'CFBundleShortVersionString': '3.2.0',
-            'CFBundleVersion': '3.2.0.0',
-            'CFBundleIdentifier': 'org.pymol.pymol',
-            'NSHumanReadableCopyright': 'Copyright (c) Schrodinger, LLC',
-            'LSRequiresNativeExecution': True,
-            'NSRequiresAquaSystemAppearance': 'False',
-            'LSEnvironment': {
-                'PYMOL_DATA': os.path.join('pymol', 'pymol_path', 'data'),
-            },
-        },
-    )
-
+    # macOS .app bundle: EXE → COLLECT → BUNDLE
     pyz = PYZ(a.pure)
     exe = EXE(
         pyz,
@@ -244,6 +221,28 @@ if sys.platform == 'darwin':
         upx=True,
         upx_exclude=[],
         name=_exe_name,
+    )
+    app = BUNDLE(
+        coll,
+        name=f'{_exe_name}.app',
+        icon=None,
+        bundle_identifier='org.pymol.pymol',
+        info_plist={
+            'NSPrincipalClass': 'NSApplication',
+            'NSHighResolutionCapable': 'True',
+            'CFBundleName': 'PyMOL',
+            'CFBundleDisplayName': 'PyMOL Molecular Graphics System',
+            'CFBundleGetInfoString': 'PyMOL - Molecular Visualization',
+            'CFBundleShortVersionString': '3.2.0',
+            'CFBundleVersion': '3.2.0.0',
+            'CFBundleIdentifier': 'org.pymol.pymol',
+            'NSHumanReadableCopyright': 'Copyright (c) Schrodinger, LLC',
+            'LSRequiresNativeExecution': True,
+            'NSRequiresAquaSystemAppearance': 'False',
+            'LSEnvironment': {
+                'PYMOL_DATA': os.path.join('pymol', 'pymol_path', 'data'),
+            },
+        },
     )
 
 else:
