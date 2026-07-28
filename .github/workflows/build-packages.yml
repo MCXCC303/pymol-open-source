@@ -7,11 +7,11 @@ on:
         description: 'PyMOL version override (leave empty for auto-detect)'
         required: false
         default: ''
-  push:
-    tags:
-      - 'v*'
 
 jobs:
+  # ==========================================================================
+  # Windows - portable (light): 实体机可用，不包含软件 OpenGL 回退
+  # ==========================================================================
   build-windows:
     runs-on: windows-latest
     env:
@@ -70,6 +70,7 @@ jobs:
     - name: Build portable bundle
       run: |
         conda activate $env:CONDA_ENV_NAME
+        $env:PYMOL_CONSOLE = "0"
         python packaging/build_package.py
 
     - name: Upload portable archive
@@ -79,6 +80,88 @@ jobs:
         path: dist/PyMOL-*.zip
         retention-days: 30
 
+  # ==========================================================================
+  # Windows - full: 虚拟机兼容，包含 Mesa 软件渲染 + NSIS 安装程序
+  # ==========================================================================
+  build-windows-full:
+    runs-on: windows-latest
+    env:
+      CONDA_ENV_NAME: "pymol_pkg_full"
+
+    steps:
+    - uses: actions/checkout@v6
+
+    - name: Set version
+      run: |
+        if ("${{ inputs.version }}" -ne "") {
+          echo "PYMOL_APP_VERSION=${{ inputs.version }}" | Out-File -Append -FilePath $env:GITHUB_ENV
+        }
+
+    - name: Install Miniforge
+      run: choco install miniforge3
+
+    - name: Add conda to PATH
+      run: |
+        echo "$env:CONDA" | Out-File -Append -FilePath $env:GITHUB_PATH
+        echo "$env:CONDA\Scripts" | Out-File -Append -FilePath $env:GITHUB_PATH
+
+    - name: Set up conda environment
+      run: |
+        conda init powershell
+        conda create --name $env:CONDA_ENV_NAME -c conda-forge -c schrodinger --override-channels `
+            python=3.12 `
+            pip `
+            freetype `
+            glew `
+            glm `
+            libpng `
+            libxml2-devel `
+            libnetcdf `
+            msgpack-c `
+            msgpack-cxx `
+            numpy `
+            pyside6 `
+            mesa
+
+    - name: Get additional sources
+      run: |
+        conda activate $env:CONDA_ENV_NAME
+        git clone --depth 1 https://github.com/rcsb/mmtf-cpp.git
+        Copy-Item -Recurse -Path mmtf-cpp/include/* -Destination "$env:CONDA_PREFIX\Library\include"
+
+    - name: Build PyMOL
+      run: |
+        conda activate $env:CONDA_ENV_NAME
+        pip install -v .
+
+    - name: Install packaging tools
+      run: |
+        conda activate $env:CONDA_ENV_NAME
+        pip install pyinstaller
+
+    - name: Build portable bundle + NSIS installer
+      run: |
+        conda activate $env:CONDA_ENV_NAME
+        $env:PYMOL_CONSOLE = "0"
+        python packaging/build_package.py --installer
+
+    - name: Upload portable archive
+      uses: actions/upload-artifact@v4
+      with:
+        name: PyMOL-Windows-Full-Portable
+        path: dist/PyMOL-*.zip
+        retention-days: 30
+
+    - name: Upload NSIS installer
+      uses: actions/upload-artifact@v4
+      with:
+        name: PyMOL-Windows-Full-Installer
+        path: dist/PyMOL-*Setup.exe
+        retention-days: 30
+
+  # ==========================================================================
+  # macOS (Intel)
+  # ==========================================================================
   build-macos:
     runs-on: macos-latest
     env:
@@ -147,6 +230,9 @@ jobs:
         path: dist/PyMOL-*.dmg
         retention-days: 30
 
+  # ==========================================================================
+  # macOS (Apple Silicon)
+  # ==========================================================================
   build-macos-arm64:
     runs-on: macos-latest
     env:
