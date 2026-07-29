@@ -167,20 +167,6 @@ def _collect_libs_from_packages(package_names):
 
 binaries += _collect_libs_from_packages(['pymol', 'chempy.champ'])
 
-# -- Collect OpenGL fallback DLLs for Windows ---------------------------------
-
-if sys.platform == 'win32':
-    # Mesa software OpenGL renderer and ANGLE (Direct3D translation layer)
-    # Needed when the system lacks a desktop OpenGL driver (VM, remote desktop)
-    _conda_prefix = os.environ.get('CONDA_PREFIX', sys.prefix)
-    for _dll_name in ['opengl32sw.dll', 'libEGL.dll', 'libGLESv2.dll']:
-        for _subdir in ['Library/bin', 'Library/lib', 'bin', 'lib']:
-            _candidate = os.path.join(_conda_prefix, _subdir, _dll_name)
-            if os.path.exists(_candidate):
-                binaries.append((_candidate, '.'))
-                print(f"Added OpenGL fallback: {_candidate}")
-                break
-
 # -- Excludes ----------------------------------------------------------------
 
 excludes = [
@@ -264,10 +250,6 @@ else:
     # Windows / Linux onedir
     pyz = PYZ(a.pure)
 
-    # Use console=True on Windows for debugging (shows stdout/stderr)
-    # Change to console=False for release builds
-    _win_console = os.environ.get('PYMOL_CONSOLE', '1' if sys.platform == 'win32' else '0') == '1'
-
     exe = EXE(
         pyz,
         a.scripts,
@@ -278,7 +260,7 @@ else:
         bootloader_ignore_signals=False,
         strip=False,
         upx=True,
-        console=_win_console,
+        console=False,
         icon=None,
     )
 
