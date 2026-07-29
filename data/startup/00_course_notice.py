@@ -4,10 +4,10 @@ Prints to both stdout (terminal) and PyMOL's internal console.
 """
 print(r"""
   =================================================================
-   药用人工智能（Pharmaceutical AI）课程教学环境
-   PyMOL Open Source
+   重庆大学药学院 — 药用人工智能课程教学环境
+   PyMOL Open Source — 玻尔（Bohrium）智算平台
 
-   本发行版专为药物人工智能课程教学用途打包。适用场景包括：
+   本发行版专为药用人工智能课程教学用途打包。适用场景包括：
      - 蛋白质 / 小分子三维结构可视化
      - 药物-靶点相互作用分析
      - 分子动力学轨迹查看

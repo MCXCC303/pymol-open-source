@@ -79,8 +79,8 @@ def main():
         _write_log("Calling pymol.launch()...")
         print("""
   =================================================================
-   药用人工智能（Pharmaceutical AI）课程教学环境 — PyMOL Open Source
-   本版本仅供教育研究用途。商业/监管用途请联系 Schrodinger, Inc.
+   重庆大学药学院 药用人工智能课程 — 玻尔（Bohrium）智算平台
+   PyMOL Open Source  仅供教育研究用途
   =================================================================
 """)
 
