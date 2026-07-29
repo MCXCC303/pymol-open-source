@@ -77,7 +77,12 @@ def main():
         _write_log("pymol imported OK")
 
         _write_log("Calling pymol.launch()...")
-        print("\n  [课程版] 药用人工智能教学环境 — 详见 NOTICE.txt\n")
+        print("""
+  =================================================================
+   药用人工智能（Pharmaceutical AI）课程教学环境 — PyMOL Open Source
+   本版本仅供教育研究用途。商业/监管用途请联系 Schrodinger, Inc.
+  =================================================================
+""")
 
         # Verify Qt is importable before handing off to PyMOL.
         # If Qt fails, PyMOL silently falls back to GLUT (which is
