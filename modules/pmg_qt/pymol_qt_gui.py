@@ -898,7 +898,20 @@ PyMOL> color ye<TAB>    (will autocomplete "yellow")
 
     def show_about(self):
         msg = [
-            'The PyMOL Molecular Graphics System\n',
+            'INNOVATIVE DRUG RESEARCH CENTER',
+            'SCHOOL OF PHARMACEUTICAL SCIENCES',
+            'CHONGQING UNIVERSITY\n',
+            '"AI in Pharmaceutical Sciences" Course Environment\n',
+            'This distribution is packaged for the AI in Pharmaceutical Sciences course.',
+            'Use cases include:',
+            '  - Protein / small molecule 3D structure visualization',
+            '  - Drug-target interaction analysis',
+            '  - Molecular dynamics trajectory viewing',
+            '  - Virtual screening result display',
+            '  - Structure-based drug design education\n',
+            'This version is for educational and research purposes only.',
+            'Users must comply with the original PyMOL license terms.\n',
+            'The PyMOL Molecular Graphics System',
             'Version %s' % (self.cmd.get_version()[0]),
             u'Copyright (C) Schr\xF6dinger, LLC.',
             'All rights reserved.\n',

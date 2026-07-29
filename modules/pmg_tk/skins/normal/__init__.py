@@ -93,9 +93,19 @@ class Normal(PMGSkin, pymol._gui.PyMOLDesktopGUI):
     
     appname        = 'The PyMOL Molecular Graphics System'
     appversion     = '0.0.0.0' # will be set in __init__
-    copyright      = ('Copyright (C) 2003-%d\n' % (time.localtime().tm_year,) +
-                      'Schrodinger LLC.\n'+
-                      'All rights reserved.')
+    copyright      = (
+        'INNOVATIVE DRUG RESEARCH CENTER\n'
+        'SCHOOL OF PHARMACEUTICAL SCIENCES, CHONGQING UNIVERSITY\n'
+        '"AI in Pharmaceutical Sciences" Course Environment\n\n'
+        'This distribution is packaged for the AI in Pharmaceutical Sciences course.\n'
+        'Use cases: protein/small molecule visualization, drug-target interaction\n'
+        'analysis, molecular dynamics trajectory viewing, virtual screening,\n'
+        'structure-based drug design education.\n\n'
+        'For educational and research purposes only.\n'
+        'Users must comply with the original PyMOL license terms.\n\n'
+        'Copyright (C) 2003-%d\n' % (time.localtime().tm_year,) +
+        'Schrodinger LLC.\n'+
+        'All rights reserved.')
     contactweb     = 'http://www.pymol.org'
     contactemail   = 'sales@schrodinger.com'
     

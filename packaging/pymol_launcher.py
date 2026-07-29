@@ -77,12 +77,6 @@ def main():
         _write_log("pymol imported OK")
 
         _write_log("Calling pymol.launch()...")
-        print("""
-  =================================================================
-   重庆大学药学院 药用人工智能课程 — 玻尔（Bohrium）智算平台
-   PyMOL Open Source  仅供教育研究用途
-  =================================================================
-""")
 
         # Verify Qt is importable before handing off to PyMOL.
         # If Qt fails, PyMOL silently falls back to GLUT (which is
