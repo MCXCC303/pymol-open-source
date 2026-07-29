@@ -86,6 +86,27 @@ def main():
 
         _write_log("Calling pymol.launch()...")
         print("\n  [课程版] 药用人工智能教学环境 — 详见 NOTICE.txt\n")
+
+        # Verify Qt is importable before handing off to PyMOL.
+        # If Qt fails, PyMOL silently falls back to GLUT (which is
+        # not compiled in) and crashes with a misleading
+        # "NotImplementedError: compile with --glut".
+        try:
+            __import__('pmg_qt.pymol_qt_gui')
+            _write_log("pmg_qt import OK")
+        except ImportError as e:
+            _write_log(f"FATAL: cannot import pmg_qt: {e}")
+            # Try to diagnose: list files in PySide6 package
+            pyside_dir = os.path.join(sys._MEIPASS, 'PySide6')
+            if os.path.isdir(pyside_dir):
+                _write_log(f"PySide6 contents: {os.listdir(pyside_dir)[:20]}")
+            raise RuntimeError(
+                f"无法加载 Qt 图形界面 ({e})\n\n"
+                f"请检查显卡驱动或尝试：\n"
+                f"  set QT_OPENGL=software\n"
+                f"  PyMOL.exe"
+            ) from e
+
         pymol.launch()
 
     except SystemExit:
